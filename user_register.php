@@ -21,16 +21,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if($role === "admin" && $adminKey !== $admin_secret){
         echo "❌ Invalid Admin Key. You cannot register as admin.";
     } else {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        // Check if UserId already exists
+        $checkSql = "SELECT 1 FROM users WHERE UserId = ?";
+        $checkStmt = mysqli_prepare($conn, $checkSql);
+        mysqli_stmt_bind_param($checkStmt, "s", $userid);
+        mysqli_stmt_execute($checkStmt);
+        $checkResult = mysqli_stmt_get_result($checkStmt);
 
-        $sql = "INSERT INTO users (UserId, Name, Email, Password, Phone, Role) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "ssssss", $userid, $name, $email, $hashed_password, $phone, $role);
-
-        if(mysqli_stmt_execute($stmt)){
-            echo "✅ Account created successfully. <a href='index.php'>Login here</a>";
+        if(mysqli_num_rows($checkResult) > 0){
+            echo "❌ User ID already exists. Please choose another.";
         } else {
-            echo "❌ Error: " . mysqli_error($conn);
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            $sql = "INSERT INTO users (UserId, Name, Email, Password, Phone, Role) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "ssssss", $userid, $name, $email, $hashed_password, $phone, $role);
+
+            if(mysqli_stmt_execute($stmt)){
+                echo "✅ Account created successfully. <a href='index.php'>Login here</a>";
+            } else {
+                echo "❌ Error: " . mysqli_error($conn);
+            }
         }
     }
 }
@@ -46,36 +57,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 
 <body>
-
-    <div class="floating-element">
-        <i class="fas fa-user-plus" style="font-size: 3rem; color: rgba(255,255,255,0.1);"></i>
-    </div>
-    <div class="floating-element">
-        <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: rgba(255,255,255,0.1);"></i>
-    </div>
-    <div class="floating-element">
-        <i class="fas fa-key" style="font-size: 2rem; color: rgba(255,255,255,0.1);"></i>
-    </div>
-
     <div class="container">
         <h1><i class="fas fa-user-plus"></i> Create Account</h1>
-        
-        <?php if($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-            <div class="message">
-                <?php
-                if($role === "admin" && $adminKey !== $admin_secret){
-                    echo "❌ Invalid Admin Key. You cannot register as admin.";
-                } else {
-                    if(mysqli_stmt_execute($stmt)){
-                        echo "✅ Account created successfully. <a href='index.php'>Login here</a>";
-                    } else {
-                        echo "❌ Error: " . mysqli_error($conn);
-                    }
-                }
-                ?>
-            </div>
-        <?php endif; ?>
-        
+
         <form method="post" id="registrationForm">
             <div class="form-group">
                 <i class="fas fa-id-card form-icon"></i>
@@ -132,47 +116,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <?php endif; ?>
             </div>
 
-            <button type="submit" class="submit-btn" onclick="this.classList.add('loading')">
+            <button type="submit" class="submit-btn">
                 <i class="fas fa-user-plus"></i> Create My Account
             </button>
         </form>
     </div>
-
-    <script>
-        // Add smooth interactions
-        document.addEventListener('DOMContentLoaded', function() {
-            const inputs = document.querySelectorAll('input, select');
-            
-            inputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.parentElement.style.transform = 'scale(1.02)';
-                });
-                
-                input.addEventListener('blur', function() {
-                    this.parentElement.style.transform = 'scale(1)';
-                });
-            });
-
-            // Add typing animation to placeholders
-            const placeholders = [
-                'Type your unique User ID...',
-                'Enter your full name...',
-                'Your email address...',
-                'Create a secure password...',
-                'Your contact number...'
-            ];
-
-            // Enhanced form validation feedback
-            const form = document.getElementById('registrationForm');
-            form.addEventListener('submit', function(e) {
-                const submitBtn = this.querySelector('.submit-btn');
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
-                
-                // Add subtle animation to form during submission
-                this.style.transform = 'scale(0.98)';
-                this.style.opacity = '0.8';
-            });
-        });
-    </script>
 </body>
 </html>
+
+
