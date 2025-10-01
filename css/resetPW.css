@@ -1,0 +1,240 @@
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 16s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Advanced particle system */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 35%, rgba(255, 255, 255, 0.12) 2px, transparent 2px),
+                radial-gradient(circle at 75% 65%, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+                radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px);
+            background-size: 280px 280px, 200px 200px, 320px 320px, 180px 180px;
+            animation: floatParticles 28s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatParticles {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-140px) rotate(360deg); }
+        }
+
+        .container {
+            perspective: 1500px;
+            animation: containerZoom 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes containerZoom {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotateY(30deg) translateZ(-200px);
+            }
+            70% {
+                transform: scale(1.05) rotateY(-5deg) translateZ(0px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg) translateZ(0px);
+            }
+        }
+
+        .password_box {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(30px);
+            border-radius: 28px;
+            padding: 55px 45px;
+            width: 460px;
+            max-width: 95vw;
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.15);
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .password_box:hover {
+            transform: translateY(-12px) rotateX(4deg);
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.18),
+                inset 0 1px 0 rgba(255, 255, 255, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.25);
+        }
+
+        /* Premium animated border */
+        .password_box::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #667eea);
+            background-size: 400% 400%;
+            border-radius: 32px;
+            z-index: -1;
+            animation: premiumBorder 5s ease-in-out infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes premiumBorder {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Floating orbs with enhanced animation */
+        .password_box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 15% 85%, rgba(255, 255, 255, 0.08) 35px, transparent 35px),
+                radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.06) 25px, transparent 25px),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.04) 20px, transparent 20px);
+            animation: orbDance 20s ease-in-out infinite;
+            pointer-events: none;
+            border-radius: 28px;
+        }
+
+        @keyframes orbDance {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            33% { transform: translateY(-8px) rotate(120deg) scale(1.05); }
+            66% { transform: translateY(-4px) rotate(240deg) scale(0.95); }
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(45deg, #fff, #f8f9fa, #e9ecef, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleSpiral 2.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.4s both;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes titleSpiral {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(-360deg) translateY(-80px);
+            }
+            60% {
+                transform: scale(1.1) rotate(20deg) translateY(-10px);
+            }
+            80% {
+                transform: scale(0.95) rotate(-5deg) translateY(3px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg) translateY(0);
+            }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 45px;
+            line-height: 1.6;
+            animation: subtitleGlow 1.8s ease-out 1s both;
+        }
+
+        @keyframes subtitleGlow {
+            0% {
+                opacity: 0;
+                transform: translateY(25px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .input-group {
+            position: relative;
+            animation: inputMagic 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation-fill-mode: both;
+        }
+
+        .input-group:nth-child(1) { 
+            animation-delay: 1.3s; 
+            transform: translateX(-60px) rotateZ(-10deg);
+        }
+        .input-group:nth-child(2) { 
+            animation-delay: 1.6s; 
+            transform: translateY(40px) rotateZ(5deg);
+        }
+
+        @keyframes inputMagic {
+            0% {
+                opacity: 0;
+            }
+            60% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) translateY(0) rotateZ(0deg);
+            }
+        }
+
+        input[type="password"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 20px 28px;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: 'Fredoka', sans-serif;
+        }
