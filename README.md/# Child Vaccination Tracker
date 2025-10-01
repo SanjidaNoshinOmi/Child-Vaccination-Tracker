@@ -1,0 +1,144 @@
+# Child Vaccination Tracker
+
+## Project Description
+The **Child Vaccination Tracker** is a database-driven system designed to manage child vaccination records efficiently.  
+It maintains child health information, vaccination schedules, payments, and health cards.  
+This system helps guardians, healthcare centers, and admins efficiently track and update child profiles, vaccine data, and center information.
+
+---
+
+## ✨ Key Features
+
+### User Management
+- Supports two types of users: **Admin** and **General (Parents/Guardians)**.  
+- **Admins** manage vaccines, centers, and updates.  
+- **General users** register children, make payments, and download health cards.  
+
+### Child Profiles
+- Stores essential child information: name, date of birth, gender, guardian details, blood group, etc.  
+- Each child profile is linked to vaccination records and a **unique health card**.  
+
+### Vaccination Management
+- Maintains vaccine details: name, type, recommended age, aftereffects, and dose numbers.  
+- Tracks vaccination schedules, actual dates, status (done/missed), and dose numbers.  
+- Supports multiple vaccine administrations across different centers.  
+
+### Centers
+- Records center details: name, address, contact, and available vaccines.  
+- Linked to vaccination administration and child vaccination records.  
+
+### Payments
+- Stores payment information: PaymentID, amount, method, and date.  
+- Connected with guardians, centers and child profiles.  
+
+### Health Card
+- Each child is assigned one **unique health card**, which can be downloaded multiple times.  
+- Contains important medical details: weight, height, allergies, chronic illnesses, medications, vaccination status, and guardian emergency contact.  
+
+### Relations & Updates
+- **Admins** can update vaccine and center related information.  
+- **Guardians** can register children and monitor vaccination progress.
+
+---
+
+## EER (Entity-Relationship Diagram)
+![EER Diagram](img/EER.png)  
+
+## Schema (Schema Diagram)
+![SCHEMA](img/Schema.png)  
+---
+
+## Screenshots
+### Login Page
+![Login](img/login.png)
+
+### General Dashboard
+![General Dashboard](img/general_dashboard.png)
+
+### Admin Dashboard
+![Admin Dashboard](img/admin_dashboard.png)
+
+### Register Child Profile
+![Register Child Profile](img/register_childProfiles.png)
+
+### Registered Child Profiles
+![Registered Child Profiles](img/registered_children.png)
+
+### Vaccine Page
+![Vaccine](img/vaccine.png)
+
+### Centers Page
+![Centers](img/centers.png)
+
+### Health Card
+![Health Card](img/healthcard.png)
+
+### Vaccination Status Page
+![Vaccination Status](img/vaccinationStatus.png)
+
+### Payment page
+![Payment](img/payment.png)
+
+### Admin updates Centers page
+![Admin updates Centers](img/Admin_update_center.png)
+
+### Admin updates Vaccines page
+![Admin updates Vaccines](img/admin_update_vaccine.png)
+
+### VaccinePage for Admin
+![VaccinePage for Admin](img/vaccinePage_for_Admin.png)
+
+### CenterPage for Admin
+![CenterPage for Admin](img/CenterPage_for_Admin.png)
+
+### phpMyAdmin page
+![phpMyAdmin](img/phpmyAdmin.png)
+
+---
+
+## Setup Guide
+
+### Prerequisites
+- Windows OS (recommended for Laragon)  
+- [Laragon](https://laragon.org/) installed  
+- PHP >= 8.0 (comes with Laragon)  
+- MariaDB (comes with Laragon)  
+
+
+### Installation Steps
+1. **Clone or copy the project folder** into `C:\laragon\www\`.  
+2. **Start Laragon** and turn on:
+   - Apache (or Nginx)  
+   - MariaDB  
+3. **Create a database** in MariaDB:
+   - Open `http://localhost/phpmyadmin/`  
+   - Create a database (e.g., `vaccination_tracker`)  
+   - Import any SQL file if your project has one (`database.sql`)  
+4. **Configure database connection** in your project:
+   - Open the database config file (e.g., `config.php`)  
+   - Update credentials:
+     ```php
+     DB_HOST=localhost
+     DB_NAME=vaccination_tracker
+     DB_USER=root
+     DB_PASS=
+     ```  
+5. **Run the project**:
+   - Open your browser and go to:  
+     ```
+     http://localhost/your-project-folder/
+     ```
+
+---
+
+## Contributing
+1. Fork the repository  
+2. Create a new branch (`git checkout -b feature/YourFeature`)  
+3. Make your changes and commit (`git commit -m 'Add YourFeature'`)  
+4. Push to the branch (`git push origin feature/YourFeature`)  
+5. Open a pull request  
+
+---
+
+## License
+This project currently has **No license**. All rights reserved by the author. Contact the repository owner for reuse permissions.
